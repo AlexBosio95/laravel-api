@@ -4,8 +4,8 @@
         
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item" @click="(this.currentPage - 1)"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <li class="page-item" :class="(currentPage == 1) ? 'disabled': '' "><a class="page-link" href="#" @click="getPagePost(currentPage - 1)">Previous</a></li>
+                <li class="page-item" :class="(currentPage == lastPage) ? 'disabled': '' "><a class="page-link" href="#" @click="getPagePost(currentPage + 1)">Next</a></li>
             </ul>
         </nav>
 
@@ -36,18 +36,24 @@ export default {
     },
     methods: {
         
-        getPagePost(){
+        getPagePost(page){
             this.loadingPage = false;
 
-            axios.get('/api/posts')
+            axios.get('/api/posts', {
+
+                params: {
+                        page: page
+                    }
+            })
             .then((response) => {
                 this.ArrayPosts = response.data.results.data;
-                this.currentPage = response.data.results.currentPage;
+                this.currentPage = response.data.results.current_page;
+                this.lastPage = response.data.results.last_page;
             });
         }
     },
     mounted(){
-        this.getPagePost();
+        this.getPagePost(1);
     }
 }
 </script>

@@ -1970,18 +1970,23 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getPagePost: function getPagePost() {
+    getPagePost: function getPagePost(page) {
       var _this = this;
 
       this.loadingPage = false;
-      axios.get('/api/posts').then(function (response) {
+      axios.get('/api/posts', {
+        params: {
+          page: page
+        }
+      }).then(function (response) {
         _this.ArrayPosts = response.data.results.data;
-        _this.currentPage = response.data.results.currentPage;
+        _this.currentPage = response.data.results.current_page;
+        _this.lastPage = response.data.results.last_page;
       });
     }
   },
   mounted: function mounted() {
-    this.getPagePost();
+    this.getPagePost(1);
   }
 });
 
@@ -2037,7 +2042,9 @@ var render = function render() {
       staticClass: "card-title text-center"
     }, [_vm._v(_vm._s(post.name))]), _vm._v(" "), _c("p", {
       staticClass: "card-text"
-    }, [_vm._v(_vm._s(post.content))]), _vm._v(" "), _c("a", {
+    }, [_vm._v(_vm._s(post.content))]), _vm._v(" "), _c("p", {
+      staticClass: "card-text"
+    }, [_vm._v(_vm._s(post.category ? post.category.name : "-"))]), _vm._v(" "), _c("a", {
       staticClass: "btn btn-primary",
       attrs: {
         href: "#"
@@ -2142,17 +2149,31 @@ var render = function render() {
     staticClass: "pagination"
   }, [_c("li", {
     staticClass: "page-item",
-    on: {
-      click: function click($event) {
-        this.currentPage - 1;
-      }
-    }
+    "class": _vm.currentPage == 1 ? "disabled" : ""
   }, [_c("a", {
     staticClass: "page-link",
     attrs: {
       href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getPagePost(_vm.currentPage - 1);
+      }
     }
-  }, [_vm._v("Previous")])]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Previous")])]), _vm._v(" "), _c("li", {
+    staticClass: "page-item",
+    "class": _vm.currentPage == _vm.lastPage ? "disabled" : ""
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getPagePost(_vm.currentPage + 1);
+      }
+    }
+  }, [_vm._v("Next")])])])]), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("Card", {
     attrs: {
@@ -2161,19 +2182,7 @@ var render = function render() {
   })], 1)]);
 };
 
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("li", {
-    staticClass: "page-item"
-  }, [_c("a", {
-    staticClass: "page-link",
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("Next")])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
