@@ -1973,7 +1973,7 @@ __webpack_require__.r(__webpack_exports__);
     getPagePost: function getPagePost(page) {
       var _this = this;
 
-      this.loadingPage = false;
+      this.loadingPage = true;
       axios.get('/api/posts', {
         params: {
           page: page
@@ -1982,6 +1982,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.ArrayPosts = response.data.results.data;
         _this.currentPage = response.data.results.current_page;
         _this.lastPage = response.data.results.last_page;
+        _this.loadingPage = false;
       });
     }
   },
@@ -2141,7 +2142,9 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "container"
-  }, [_c("nav", {
+  }, [_vm.loadingPage ? _c("div", {
+    staticClass: "d-flex justify-content-center"
+  }, [_vm._m(0)]) : _c("div", [_c("nav", {
     attrs: {
       "aria-label": "Page navigation example"
     }
@@ -2179,10 +2182,22 @@ var render = function render() {
     attrs: {
       ArrayPosts: _vm.ArrayPosts
     }
-  })], 1)]);
+  })], 1)])]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "spinner-grow",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "sr-only"
+  }, [_vm._v("Loading...")])]);
+}];
 render._withStripped = true;
 
 

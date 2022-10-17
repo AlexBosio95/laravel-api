@@ -1,17 +1,25 @@
 <template>
     <div class="container">
 
-        
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item" :class="(currentPage == 1) ? 'disabled': '' "><a class="page-link" href="#" @click="getPagePost(currentPage - 1)">Previous</a></li>
-                <li class="page-item" :class="(currentPage == lastPage) ? 'disabled': '' "><a class="page-link" href="#" @click="getPagePost(currentPage + 1)">Next</a></li>
-            </ul>
-        </nav>
-
-        <div class="row">
-            <Card :ArrayPosts = 'ArrayPosts'/>
+        <div v-if="loadingPage" class="d-flex justify-content-center">
+            <div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+            </div>
         </div>
+
+        <div v-else>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" :class="(currentPage == 1) ? 'disabled': '' "><a class="page-link" href="#" @click="getPagePost(currentPage - 1)">Previous</a></li>
+                    <li class="page-item" :class="(currentPage == lastPage) ? 'disabled': '' "><a class="page-link" href="#" @click="getPagePost(currentPage + 1)">Next</a></li>
+                </ul>
+            </nav>
+
+            <div class="row">
+                <Card :ArrayPosts = 'ArrayPosts'/>
+            </div>
+        </div>
+        
 
     </div>
 
@@ -37,7 +45,7 @@ export default {
     methods: {
         
         getPagePost(page){
-            this.loadingPage = false;
+            this.loadingPage = true;
 
             axios.get('/api/posts', {
 
@@ -49,6 +57,7 @@ export default {
                 this.ArrayPosts = response.data.results.data;
                 this.currentPage = response.data.results.current_page;
                 this.lastPage = response.data.results.last_page;
+                this.loadingPage = false
             });
         }
     },
