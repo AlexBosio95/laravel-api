@@ -17,6 +17,14 @@ class PostController extends Controller
     {
         $posts = Post::with(['category', 'tags'])->paginate(4);
 
+        foreach ($posts as $post) {
+            if ($post->cover) {
+                $post->cover = asset('storage/' . $post->cover);
+            } else {
+                $post->cover = asset('img/no_image.jpg');
+            }
+        }
+
         return response()->json([
             'success' => true,
             'results' => $posts

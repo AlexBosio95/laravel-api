@@ -1910,7 +1910,10 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    ArrayPosts: Array
+    title: String,
+    cover: String,
+    content: String,
+    category: Object
   }
 });
 
@@ -2032,26 +2035,30 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "col-12"
-  }, _vm._l(_vm.ArrayPosts, function (post, index) {
-    return _c("div", {
-      key: index,
-      staticClass: "card my-4"
-    }, [_c("div", {
-      staticClass: "card-body"
-    }, [_c("h5", {
-      staticClass: "card-title text-center"
-    }, [_vm._v(_vm._s(post.name))]), _vm._v(" "), _c("p", {
-      staticClass: "card-text"
-    }, [_vm._v(_vm._s(post.content))]), _vm._v(" "), _c("p", {
-      staticClass: "card-text"
-    }, [_vm._v(_vm._s(post.category ? post.category.name : "-"))]), _vm._v(" "), _c("a", {
-      staticClass: "btn btn-primary",
-      attrs: {
-        href: "#"
-      }
-    }, [_vm._v("Read more")])])]);
-  }), 0);
+    staticClass: "my-3"
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_c("img", {
+    staticClass: "card-img-top",
+    attrs: {
+      src: _vm.cover
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("h5", {
+    staticClass: "card-title fw-bold"
+  }, [_vm._v(_vm._s(_vm.title))]), _vm._v(" "), _c("p", {
+    staticClass: "card-text"
+  }, [_vm._v(_vm._s(_vm.content))]), _vm._v(" "), _c("p", {
+    staticClass: "card-text"
+  }, [_c("small", {
+    staticClass: "text-muted"
+  }, [_vm._v(_vm._s(_vm.category ? _vm.category.name : "-"))])]), _vm._v(" "), _c("a", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("Read more")])])])]);
 };
 
 var staticRenderFns = [];
@@ -2160,6 +2167,7 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
+        $event.preventDefault();
         return _vm.getPagePost(_vm.currentPage - 1);
       }
     }
@@ -2173,16 +2181,23 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
+        $event.preventDefault();
         return _vm.getPagePost(_vm.currentPage + 1);
       }
     }
   }, [_vm._v("Next")])])])]), _vm._v(" "), _c("div", {
     staticClass: "row"
-  }, [_c("Card", {
-    attrs: {
-      ArrayPosts: _vm.ArrayPosts
-    }
-  })], 1)])]);
+  }, _vm._l(_vm.ArrayPosts, function (post, index) {
+    return _c("Card", {
+      key: index,
+      attrs: {
+        title: post.name,
+        cover: post.cover,
+        content: post.content,
+        category: post.category
+      }
+    });
+  }), 1)])]);
 };
 
 var staticRenderFns = [function () {

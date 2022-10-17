@@ -10,13 +10,18 @@
         <div v-else>
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    <li class="page-item" :class="(currentPage == 1) ? 'disabled': '' "><a class="page-link" href="#" @click="getPagePost(currentPage - 1)">Previous</a></li>
-                    <li class="page-item" :class="(currentPage == lastPage) ? 'disabled': '' "><a class="page-link" href="#" @click="getPagePost(currentPage + 1)">Next</a></li>
+                    <li class="page-item" :class="(currentPage == 1) ? 'disabled': '' "><a class="page-link" href="#" @click.prevent="getPagePost(currentPage - 1)">Previous</a></li>
+                    <li class="page-item" :class="(currentPage == lastPage) ? 'disabled': '' "><a class="page-link" href="#" @click.prevent="getPagePost(currentPage + 1)">Next</a></li>
                 </ul>
             </nav>
 
             <div class="row">
-                <Card :ArrayPosts = 'ArrayPosts'/>
+                <Card v-for="(post, index) in ArrayPosts" :key="index"
+                :title = 'post.name'
+                :cover = 'post.cover'
+                :content = 'post.content'
+                :category = 'post.category'
+                />
             </div>
         </div>
         
