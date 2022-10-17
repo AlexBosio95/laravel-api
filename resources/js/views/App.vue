@@ -1,15 +1,21 @@
 <template>
     <div>
-        <h1> Work in progress </h1>
-        <h2> Lavori in corso </h2>
+        <Header />
+        <MainPost />
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'App',
-        components: { }
-    }
+
+    import Header from '../components/Header.vue';
+    import MainPost from '../components/MainPost.vue';
+
+        export default {
+            name: 'App',
+            components: {
+                Header, MainPost
+            }
+        }
 </script>
 
 <style>
