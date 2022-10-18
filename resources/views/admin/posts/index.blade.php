@@ -42,9 +42,9 @@
                     <th scope="row">{{$post->id}}</th>
                     <th scope="row">
                         @if ($post->cover)
-                                <img src="{{asset('storage/' . $post->cover)}}" class="w-25 " alt="...">
-                            @else
-                                <img src="{{asset('img/no_image.jpg')}}" class="w-25" alt="...">
+                            <img src="{{asset('storage/' . $post->cover)}}" class="w-25 " alt="...">
+                        @else
+                            <img src="{{asset('img/no_image.jpg')}}" class="w-25" alt="...">
                         @endif
                     </th>
                     <td>{{$post->name}}</td>

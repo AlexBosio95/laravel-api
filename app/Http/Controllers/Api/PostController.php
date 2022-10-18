@@ -40,7 +40,19 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $posts = Post::where('slug', $id)->first();
+
+        if ($posts) {
+            return response()->json([
+                'success' => true,
+                'results' => $posts
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'results' => 'not found'
+            ]);
+        }
     }
 
 
